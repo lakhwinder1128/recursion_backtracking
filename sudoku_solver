@@ -1,0 +1,72 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define n 9  
+
+    //function to find a solved Sudoku. 
+    bool isvalid(int row,int col,int val, int grid[n][n]){
+        for(int i=0;i<n;i++){
+            if(grid[row][i]==val)return false;
+            if(grid[i][col]==val)return false;
+            if(grid[3*(row/3)+i/3][3*(col/3)+i%3]==val)return false;
+        }
+        return true;
+    }
+    bool SolveSudoku(int grid[n][n])  
+    { 
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==0){
+                for(int k=1;k<=9;k++){
+                    if(isvalid(i,j,k,grid)){
+                        grid[i][j]=k;
+                        if(SolveSudoku(grid)==true)return true;
+                        else grid[i][j]=0;
+                    }
+                }
+                return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+ 
+    void printGrid (int grid[n][n]) 
+    {
+         
+         for(int i=0;i<n;i++){
+             for(int j=0;j<n;j++){
+                 cout<< grid[i][j]<<" ";
+             }
+             cout<<endl;
+         }
+    }
+
+
+
+
+int main() {
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		int grid[n][n];
+		
+		for(int i=0;i<9;i++)
+		    for(int j=0;j<9;j++)
+		        cin>>grid[i][j];
+		        
+		
+		
+		if (SolveSudoku(grid) == true)  
+            printGrid(grid);  
+        else
+            cout << "No solution exists";  
+        
+        cout<<endl;
+	}
+	
+	return 0;
+}
