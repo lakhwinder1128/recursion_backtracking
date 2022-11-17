@@ -1,0 +1,23 @@
+//Function to find the minimum number of platforms required at the
+    //railway station such that no train waits.
+    int findPlatform(int arr[], int dep[], int n)
+    {
+    	// Your code here
+    	//  ans = max no of overlaps of timings
+    	// consider time on x axis and see from starting to end 
+    	sort(arr,arr+n);
+    	sort(dep,dep+n);
+    	int i=1,j=0;    // i for starting time and  j for ending time 
+    	int mx=1,platforms=1;
+    	while(i<n&&j<n){
+    	    if(arr[i]<=dep[j]){
+    	        platforms++;
+    	        i++;
+    	    }
+    	    else if(arr[i]>dep[j]) {
+    	        platforms--;
+    	      j++;}
+    	    mx=max(mx,platforms);
+    	}
+    	return mx;
+    }
