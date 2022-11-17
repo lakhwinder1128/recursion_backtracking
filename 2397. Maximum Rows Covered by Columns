@@ -1,0 +1,34 @@
+int ans=0;
+    void solve(vector<vector<int>>&mat,int cols,int c,vector<int>&vis){
+        if(cols<0||c>mat[0].size())return ;
+        if(cols==0||c==mat[0].size()){
+               int count=0;
+            // int res=mat.size();
+            int n=mat.size();
+            int m=mat[0].size();
+            for(int i=0;i<n;i++){
+               // cout<<i<<" ";
+                int flag=0;
+                for(int j=0;j<m;j++){
+                    if(mat[i][j]==1&&vis[j]==0){//countofbadrows++;
+                        flag=1;
+                                                break;}
+                }
+                if(flag==0)count++;
+            }
+            ans=max(ans,count);
+            return;
+            
+        }
+    
+            vis[c]=1;
+            solve(mat,cols-1,c+1,vis);
+            vis[c]=0;
+                solve(mat,cols,c+1,vis);
+        
+    }
+    int maximumRows(vector<vector<int>>& mat, int cols) {
+        vector<int>vis(mat[0].size(),0);
+        solve(mat,cols,0,vis);
+        return ans;
+    }
