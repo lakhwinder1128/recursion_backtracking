@@ -1,0 +1,64 @@
+class Solution{
+    public:
+    bool issafe(int x,int y,vector<vector<int>>m,int n,vector<vector<int>>visited){
+        if(x>=0&&x<n&&y>=0&&y<n&&visited[x][y]==0&&m[x][y]==1)return true;
+        else return false;
+    }
+    void solve(vector<vector<int>>m,int n,vector<vector<int>>&visited,vector<string>&ans,string &s,int x,int y){
+        if(x==n-1&&y==n-1){
+            ans.push_back(s);
+            return ;
+        }
+        visited[x][y]=1;
+        // down
+        int nx=x+1;
+        int ny=y;
+        if(issafe(nx,ny,m,n,visited)==true){
+            s.push_back('D');
+            solve(m,n,visited,ans,s,nx,ny);
+           visited[nx][ny]=0;
+           s.pop_back();
+        }
+        //left
+          nx=x;
+         ny=y-1;
+        if(issafe(nx,ny,m,n,visited)==true){
+            s.push_back('L');
+            solve(m,n,visited,ans,s,nx,ny);
+            visited[nx][ny]=0;
+           s.pop_back();
+        }
+        //right
+           nx=x;
+         ny=y+1;
+        if(issafe(nx,ny,m,n,visited)==true){
+            s.push_back('R');
+            solve(m,n,visited,ans,s,nx,ny);
+           visited[nx][ny]=0;
+           s.pop_back();
+        }
+        //up
+           nx=x-1;
+         ny=y;
+        if(issafe(nx,ny,m,n,visited)==true){
+            s.push_back('U');
+            solve(m,n,visited,ans,s,nx,ny);
+           visited[nx][ny]=0;
+           s.pop_back();
+        }
+    }
+    vector<string> findPath(vector<vector<int>> &m, int n) {
+        // Your code goes here
+        vector<vector<int>>visited=m;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                visited[i][j]=0;
+            }
+        }
+        string s="";
+        vector<string>ans;
+        if(m[0][0]==0)return ans;
+        solve(m,n,visited,ans,s,0,0);
+        return ans;
+    }
+};
