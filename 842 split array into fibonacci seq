@@ -1,0 +1,81 @@
+vector<string>ans;
+ string add(string a,string b){
+        int n=0;
+        int i=a.size()-1,j=b.size()-1;
+        int carry=0;
+        string s;
+        int sum=0;
+        while(i>=0||j>=0){sum=0;
+              if(i>=0)sum+=a[i]-'0';
+              if(j>=0)sum+=b[j]-'0';
+                          sum+=carry;
+            s.push_back(sum%10+'0');
+             carry=(sum)/10;
+                          i--,j--;
+        }
+        if(carry)s.push_back(carry+'0');
+       
+       
+        reverse(s.begin(),s.end());
+        
+        return s;
+        
+    }
+    
+    bool check(string a,string b,string rem){
+        
+        if((a.size()>1&&a[0]=='0')||(b.size()>1&&b[0]=='0'))return false;
+        string sum=add(a,b);
+       
+        if(rem==sum){
+            ans.push_back(rem);
+            return true;
+        }
+        if(sum.size()>=rem.size())return false;
+        if(sum.compare(rem.substr(0,sum.size()))!=0)return false;
+        ans.push_back(sum);
+        bool res=check(b,sum,rem.substr(sum.size()));
+        if(res)return res;
+        ans.pop_back();
+        return res;
+        
+    }
+   vector<int> toint(vector<string>ans){
+        vector<int>v,arr;
+        for(int i=0;i<ans.size();i++){
+         long long n=0;
+        string a=ans[i];
+        for(int j=0;j<a.size();j++){
+          n=n*10+a[j]-'0';
+        }
+        if(n<0||n>pow(2,31))return arr;
+        v.push_back(n);
+        }
+
+   return v;
+   }
+    vector<int> splitIntoFibonacci(string num){
+        
+   // vector<string>ans;
+   vector<int>v;
+ for(int i=1;i<=num.size()/2;i++){
+            for(int j=1;j<=(num.size()-i)/2;j++){
+                ans.push_back(num.substr(0,i));
+                ans.push_back(num.substr(i,j));
+                if(check(num.substr(0,i),num.substr(i,j),num.substr(i+j))){
+                    
+                   return toint(ans);
+                    
+                    
+                };
+                ans.pop_back();
+                ans.pop_back();        
+            }
+        }
+        
+        return v;
+        
+        
+
+
+    }
